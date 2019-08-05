@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import DataHelper from './Datahelper';
 
 class Login extends React.Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class Login extends React.Component {
 
 
     login=()=> {
-        axios.post('http://localhost:8003/o/token/',
+        axios.post(  DataHelper.baseURL() +'/o/token/',
         {
             grant_type : "password",
             client_id: "2fhRI8ePxMYkREUw1YzBJkqDnHYqVNnLddn4kSRW",
@@ -35,7 +36,7 @@ class Login extends React.Component {
         .then((response)=>{
             const token = response.data;
             console.log(response);
-            localStorage.setItem('authorization', token.token_type + ' ' + token.access_token);
+            DataHelper.setAuthToken();
             this.props.history.push('/');
         });
        
