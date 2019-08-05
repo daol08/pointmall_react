@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import { jsxIdentifier } from '@babel/types';
 
 class ItemDetail extends React.Component {
     constructor(props) {
@@ -42,7 +43,31 @@ class ItemDetail extends React.Component {
         });
     } 
 
-    
+    addToCart = () => {
+      const item = this.state.item;
+      let cartItems = localStorage.getItem('cart_items');
+      if (cartItems == null || cartItems.length < 1) {
+          cartItems = [];
+      } else {
+          cartItems = JSON.parse(cartItems);
+      }
+      let isAdded = false;
+      for (let cartItem of cartItems) {
+          if (cartItem.item.id === item.id) {
+              cartItem.count ++;
+              isAdded = true;
+              break;
+          }        
+      }
+      if (!isAdded) {
+          cartItems.push({
+              item: item,
+              count: 1
+          });
+      }
+      localStorage.setItem('cart_items', JSON.stringify(cartItems));
+     }
+
     render() {
         const item = this.state.item;
         const image = item ? item.image: null;
@@ -60,6 +85,7 @@ class ItemDetail extends React.Component {
                     </p>
                     <p>{desc}</p>
                     <button onClick={this.purchase}>구입</button>
+                    <button onClick={this.addToCart}>장바구니 담기</button>
 
                 </div>
            
