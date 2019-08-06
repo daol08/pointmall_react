@@ -1,10 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import DataHelper from './Datahelper';
+import { inject } from 'mobx-react';
 
+
+
+@inject('authStore')
 class Login extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state ={
             username: 'daol',
             password:'daol3545'
@@ -35,7 +39,8 @@ class Login extends React.Component {
         })
         .then((response)=>{
             const token = response.data;
-            console.log(response);
+            const { authStore, history }  = this.props;
+            this.props.authStore.setToken(token);
             DataHelper.setAuthToken(token);
             this.props.history.push('/');
         });
