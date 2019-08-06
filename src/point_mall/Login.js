@@ -29,14 +29,14 @@ class Login extends React.Component {
         axios.post(  DataHelper.baseURL() +'/o/token/',
         {
             grant_type : "password",
-            client_id: "2fhRI8ePxMYkREUw1YzBJkqDnHYqVNnLddn4kSRW",
+            client_id: "v33J35aNZNv5EEa2VCTiUsD4BSPJv3e9752lpBQ9",
             username: this.state.username,
             password: this.state.password
         })
         .then((response)=>{
             const token = response.data;
             console.log(response);
-            DataHelper.setAuthToken();
+            DataHelper.setAuthToken(token);
             this.props.history.push('/');
         });
        
