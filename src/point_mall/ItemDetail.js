@@ -5,7 +5,7 @@ import { jsxIdentifier } from '@babel/types';
 import DataHelper from './Datahelper';
 import { inject } from 'mobx-react';
 
-@inject('authStore')
+@inject('authStore', 'itemStore')
 class ItemDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -48,29 +48,10 @@ class ItemDetail extends React.Component {
     } 
 
     addToCart = () => {
-      const item = this.state.item;
-      let cartItems = localStorage.getItem('cart_items');
-      if (cartItems == null || cartItems.length < 1) {
-          cartItems = [];
-      } else {
-          cartItems = JSON.parse(cartItems);
-      }
-      let isAdded = false;
-      for (let cartItem of cartItems) {
-          if (cartItem.item.id === item.id) {
-              cartItem.count ++;
-              isAdded = true;
-              break;
-          }        
-      }
-      if (!isAdded) {
-          cartItems.push({
-              item: item,
-              count: 1
-          });
-      }
-      localStorage.setItem('cart_items', JSON.stringify(cartItems));
-     }
+        const { itemStore } = this.props;
+        const item = this.state.item;
+        itemStore.addItemToCart(item);
+    }
 
     render() {
         const item = this.state.item;
