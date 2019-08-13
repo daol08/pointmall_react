@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Home from './point_mall/Home'
 import Header from './point_mall/Header';
@@ -11,7 +10,7 @@ import Myitems from './point_mall/Myitems';
 import Category from './point_mall/Category';
 import Cartitems from './point_mall/Cartitems';
 import Register from './point_mall/Register';
-
+import PromiseTest from './Promise/PromiseTest';
 
 function App() {
   return (
@@ -25,6 +24,7 @@ function App() {
             <Route exact path='/me/items' component = {Myitems} />
             <Route exact path='/categories/:categoryId' component = {Category} />
             <Route exact path='/cart/items' component = {Cartitems} />
+            <Route exact path='/promisetest' component = {PromiseTest} />
             
             <Route exact path= '/register' component = {Register} /> 
         </Switch>

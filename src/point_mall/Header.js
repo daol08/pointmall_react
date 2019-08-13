@@ -1,16 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Myitems from './Myitems';
-import axios from 'axios';
-import DataHelper from './Datahelper';
-import { reaction, autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import { inject } from 'mobx-react';
 
-@inject('authStore', 'itemStore')
+@inject('authStore', 'itemStore', 'httpService')
 @observer
 class Header extends React.Component {
-    helper = new DataHelper();
     constructor(props) {
         super(props);
 
@@ -33,11 +28,11 @@ class Header extends React.Component {
 
 
     indexcategoies() {
-        axios.get(  DataHelper.baseURL() + '/categories/', {
-        }).then((response) => {
-            const categories = response.data;
+        this.props.httpService.indexcategoies()
+        .then(categories => {
+         
             this.setState({
-                categories: categories
+                 categories
             });
         });
     }

@@ -1,7 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import DataHelper from './Datahelper';
+import { inject } from 'mobx-react';
 
+@inject('httpService')
 class ItemBox extends React.Component {
     goToitem =() => {
         const item = this.props.item;
@@ -12,9 +13,7 @@ class ItemBox extends React.Component {
         const item = this.props.item;
         const count = this.props.count;
         let image = item.image;
-        if (!image.startsWith('http')) {
-            image =  DataHelper.baseURL() + image;
-        }
+       
         return (
             <div className="item-container" onClick={this.goToitem} >
                        
