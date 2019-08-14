@@ -1,11 +1,9 @@
 import React from 'react';
-import axios from 'axios';
-import DataHelper from './Datahelper';
 import { inject } from 'mobx-react';
 
 
 
-
+@inject('httpService')
 class Register extends React.Component {
     constructor(props) {
         super(props);
@@ -30,11 +28,10 @@ class Register extends React.Component {
     }
     
     register=()=> {
-        axios.post(  DataHelper.baseURL() +'/users/',
-        {
-            username: this.state.username,
-            password: this.state.password
-        })
+       this.props.httpService.register(
+         this.state.username,
+         this.state.password
+       )
         .then((response)=>{
             const { history }  = this.props;
             this.props.history.push('/login');
