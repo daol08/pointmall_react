@@ -6,6 +6,7 @@ import { inject } from 'mobx-react';
 @inject('authStore', 'itemStore', 'httpService')
 @observer
 class Header extends React.Component {
+ 
     constructor(props) {
         super(props);
 

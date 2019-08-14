@@ -14,7 +14,7 @@ import PromiseTest from './Promise/PromiseTest';
 
 function App() {
   return (
-    <Router>
+    
       <div>
         <Header />
         <Switch>
@@ -30,7 +30,7 @@ function App() {
         </Switch>
         <Footer />
         </div>
-        </Router>
+        
   );
 }
 

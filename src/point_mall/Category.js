@@ -23,7 +23,7 @@ class Category extends React.Component {
 
     indexItems() {
         const categoryId =   this.props.match.params.categoryId;
-        this.props.httpService.indexCategoryItems(categoryId)
+        this.props.httpService. indexCategoryItems(categoryId)
         .then(items => {
             this.setState({
                  items
