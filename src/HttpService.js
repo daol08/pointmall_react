@@ -15,70 +15,55 @@ class HttpService {
         reaction(()=> this.authStore.authToken, ()=> {
             axios.defaults.headers.common['Authorization'] = this.authStore.authToken; 
         });
-        
-        axios.interceptors.response.use(response => {
-
+        axios.interceptors.response.use(response=>{
             return response;
-
         }, originalError => {
-
-            const { config, response } = originalError;
-
+            const {config, response} = originalError;
             const originalRequest = config;
-
-            if (originalError.response.status === 401){
-
-                if (this.authStore.refresh_token == null) {
-
-                    alert('로그인이 필요한 서비스입니다.');
-                    this.rootstore.history.push('/login');
-
-                } else {
-                    if (!this.isRefreshingToken) {
-                        this.isRefreshingToken = true;
+            if(response.status == 401) {
+                if(this.authStore.refresh_token != null){
+                    if(!this.isRefreshingToken) {
+                        this.isrefreshingToken= true;
                         return new Promise((resolve, reject) => {
-                            this.refreshToken().then(token => {
-                                originalRequest.headers.Authorization = this.authStore.authToken
-                                resolve(axios(originalRequest));
-                                for(let subscriber of this.refreshSubscriber){
-                                    subscriber(token)
+                            this.refreshToken().then(token=> {
+                                originalRequest.headers.Authorization = this.authStore.authToken;
+                                axios(originalRequest).then(response => {
+                                    resolve(response);
+                                }).catch(error => {
+                                    reject(error);
+                                });
+                                for( let subscriber of this.refreshSubscriber) {
+                                    subscriber(token);
                                 }
                             }).catch(error => {
                                 this.authStore.deleteToken();
-                                reject(originalError);
-                                alert('로그인이 필요한 서비스입니다');
-                                this.rootstore.history.push('/login');
-                                for(let subscriber of this.refreshSubscriber){
-                                    subscriber(null);
-                                }
-                            }).finally(()=> {
-                                this.refreshSubscriber = [];
+                                reject(originalError);                             
+                            }).finally(() => {
                                 this.isRefreshingToken = false;
-                            })
+                                this.refreshSubscriber = [];
+                            });
                         });
                     }
-
                     return new Promise((resolve, reject) => {
-
-                            this.refreshSubscriber.push((token)=> {
-                                if(token == null){
-                                    reject(originalError);
-                                } else {
-                                    originalRequest.headers.Authorization = this.authStore.authToken
-                                    resolve(axios(originalRequest));
-                                }
-                                resolve(123);
-                            })
-
-                    })
-
+                        this.refreshSubscriber.push(token => {
+                            if(token == null) {
+                                reject(originalError);
+                            }else {
+                                originalRequest.headers.Authorization = this.authStore.authToken;
+                                axios(originalRequest).then(response => {
+                                    resolve(response);
+                                }).catch(error => {
+                                    reject(error);
+                                });
+                            }
+                        });
+                    });
                 }
-
             }
-
             return Promise.reject(originalError);
-
         })
+
+
     
     }
         
@@ -190,7 +175,7 @@ class HttpService {
 
             grant_type : "refresh_token",
 
-            client_id : this.clientID,
+            client_id : this.clientId,
 
             refresh_token : this.authStore.refresh_token
 
