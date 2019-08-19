@@ -192,6 +192,20 @@ class HttpService {
         });
 
     }
+
+    IndexHistory(){
+        return axios.get('/history/')
+        .then(response=> {
+            return response.data;
+        })
+    }
     
+    refundHistory(historyId) {
+        return axios.post('/history/' + historyId + '/refund/')
+        .then(response => {
+            return response.data;
+        });
+    }
 }
+
 export default HttpService;

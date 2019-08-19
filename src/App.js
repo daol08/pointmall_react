@@ -11,7 +11,7 @@ import Category from './point_mall/Category';
 import Cartitems from './point_mall/Cartitems';
 import Register from './point_mall/Register';
 import PromiseTest from './Promise/PromiseTest';
-
+import MyHistory from './point_mall/MyHistory';
 function App() {
   return (
     
@@ -25,7 +25,7 @@ function App() {
             <Route exact path='/categories/:categoryId' component = {Category} />
             <Route exact path='/cart/items' component = {Cartitems} />
             <Route exact path='/promisetest' component = {PromiseTest} />
-            
+            <Route exact path= '/history' component = {MyHistory} /> 
             <Route exact path= '/register' component = {Register} /> 
         </Switch>
         <Footer />

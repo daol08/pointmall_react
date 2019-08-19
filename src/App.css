@@ -18,6 +18,12 @@ header a {
 .header-right {
     float: right;
 }
+.history-container {
+    overflow: hidden;
+    border: 2px solid black;
+    margin: 20px
+}
+
 .center{
     float: center;
 }
