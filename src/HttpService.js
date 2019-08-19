@@ -1,17 +1,22 @@
 import axios from 'axios';
-
+import {reaction} from 'mobx';
 
 class HttpService {
 
    constructor(rootStore) {
        this.rootStore = rootStore;
        this.authStore = rootStore.authStore;
+       this.isrefreshToken = false;
 
        axios.defaults.baseURL = 'http://localhost:8003';
-       axios.defaults.headers.common['Authorization'] =  this.authStore.authToken
-   }
+       axios.defaults.headers.common['Authorization'] =  this.authStore.authToken;
+       reaction(()=> this.authStore.authToken, () => {
 
-   
+        axios.defaults.headers.common['Authorization'] = this.authStore.authToken; 
+
+    });
+}
+
    login(username, password) {
     return axios.post( '/o/token/',
     {
@@ -113,6 +118,7 @@ class HttpService {
             return response.data;
         })
     }
+
 
 }
 export default HttpService;
