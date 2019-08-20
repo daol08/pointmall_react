@@ -12,13 +12,14 @@ import Cartitems from './point_mall/Cartitems';
 import Register from './point_mall/Register';
 import PromiseTest from './Promise/PromiseTest';
 import MyHistory from './point_mall/MyHistory';
+import Tag from './point_mall/Tag';
 function App() {
   return (
     
       <div>
         <Header />
         <Switch>
-            <Route exact path= '/' component = {Home} /> 
+            <Route exact path= '/' component = {Home} /> d
             <Route exact path='/login' component = {Login} />
             <Route exact path= '/items/:itemId' component = {ItemDetail} />
             <Route exact path='/me/items' component = {Myitems} />
@@ -27,6 +28,7 @@ function App() {
             <Route exact path='/promisetest' component = {PromiseTest} />
             <Route exact path= '/history' component = {MyHistory} /> 
             <Route exact path= '/register' component = {Register} /> 
+            <Route exact path= '/tags/:tag' component = {Tag} /> 
         </Switch>
         <Footer />
         </div>

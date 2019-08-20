@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { inject } from 'mobx-react';
 
-@inject('authStore', 'itemStore', 'httpService')
+@inject('authStore', 'itemStore', 'httpService','history')
 @observer
 class Header extends React.Component {
  
@@ -12,7 +12,7 @@ class Header extends React.Component {
 
         
         this.state = {
-        
+            searchtext: '',
             categories: []
         };
         
@@ -27,7 +27,23 @@ class Header extends React.Component {
       
       }
 
+    
+      onInputChanged = (event) => {
+        const target = event.target;
+        if (target.name === 'search') {
+            this.setState({
+                searchtext: target.value
+            });
+        } 
+    }
 
+    search = () =>{
+        this.props.history.push('/tags/' + this.state.searchtext);
+
+    }
+
+    
+    
     indexcategoies() {
         this.props.httpService.indexcategoies()
         .then(categories => {
@@ -45,6 +61,7 @@ class Header extends React.Component {
 
     render() {
         const { authStore, itemStore } = this.props;
+                
                 const categories = this.state.categories.map((category) => {
             return (
                 <Link key= {category.id} to={'/categories/'+ category.id}>{category.title}</Link>
@@ -73,6 +90,12 @@ class Header extends React.Component {
                    
             
             }
+            <input type='text'
+            name='search'
+            style= {{marginLeft: '1em'}}
+            value = {this.state.searchtext}
+            onChange={this.onInputChanged}/>
+           <button onClick={this.search}>search</button>
             </div>
            
             

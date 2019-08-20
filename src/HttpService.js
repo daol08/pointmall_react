@@ -7,7 +7,7 @@ class HttpService {
         this.rootstore = rootstore;
         this.authStore = rootstore.authStore;
 
-        this.clientId = 'e2H3CDchv5sC1XCqywuHldkz0wfhPv24Yo0dcTXz'
+        this.clientId = 'UpxADcK1zrTXxgr8KhumWlgK0EDa8AwthuADdgc5'
         this.refreshSubscriber = [];
         this.isRefreshingToken = false;
         axios.defaults.baseURL = 'http://localhost:8003';
@@ -206,6 +206,15 @@ class HttpService {
             return response.data;
         });
     }
+
+    tagitems(tag) {
+        return axios.get( '/tags/'+ tag +'/items')
+        .then(response => {
+         return response.data;
+     })
+    }
+
+
 }
 
 export default HttpService;
