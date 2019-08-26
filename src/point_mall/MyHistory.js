@@ -46,8 +46,10 @@ class MyHistory extends React.Component {
                 )
             })
             return (
+                
+                <div className = 'history-container'   key={history.id}>
 
-                <div className = 'history-container'>
+                    
                     <h1>{history.created}</h1>
                     <div>
                         {!history.is_refunded &&
