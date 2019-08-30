@@ -7,7 +7,7 @@ class HttpService {
         this.rootstore = rootstore;
         this.authStore = rootstore.authStore;
 
-        this.clientId = 'PN9ERBdBD29X3VW1rOodgBQHEDmR3rhw2mlooCfp'
+        this.clientId = 'YRO1tKazsgegYu6JWS0ZCKglLN892TENDh9DlI9t'
         this.refreshSubscriber = [];
         this.isRefreshingToken = false;
         axios.defaults.baseURL = 'https://api.pointmall.daol.website';
